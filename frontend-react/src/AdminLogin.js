@@ -1,39 +1,34 @@
 import React, { useState } from "react";
 
-function AdminLogin({ onSuccess }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+function AdminLogin() {
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    if (username === "Ashok" && password === "Ashok@6889") {
-      onSuccess();
+  const login = () => {
+    if (user === "Ashok" && pass === "Ashok@6889") {
+      localStorage.setItem("isAdmin", "true");
+      window.location.href = "/admin";
     } else {
-      setError("Invalid admin credentials");
+      setError("Invalid Admin Credentials");
     }
   };
 
   return (
-    <div className="admin-login">
-      <h3>Admin Login</h3>
+    <div className="admin-bg">
+      <div className="glass admin-table">
+        <h2>Admin Login</h2>
 
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+        <input placeholder="Username" onChange={e => setUser(e.target.value)} />
+        <input
+          type="password"
+          placeholder="Password"
+          onChange={e => setPass(e.target.value)}
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-
-      <button onClick={handleLogin}>Login as Admin</button>
-
-      {error && <p className="error">{error}</p>}
+        <button onClick={login}>Login</button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+      </div>
     </div>
   );
 }
