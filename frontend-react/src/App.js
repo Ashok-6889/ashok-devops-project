@@ -3,15 +3,16 @@ import "./App.css";
 
 function App() {
   const [amount, setAmount] = useState(4000);
-  const [showSurprise, setShowSurprise] = useState(false);
   const [nameInput, setNameInput] = useState("");
-  const [finalName, setFinalName] = useState("");
+  const [gender, setGender] = useState("");
+  const [finalText, setFinalText] = useState("");
+  const [showResult, setShowResult] = useState(false);
   const timerRef = useRef(null);
 
-  // 👉 CHANGE THIS SUFFIX LOCALLY IF YOU WANT
-  const suffix = "Surprise";
+  // 🔁 CHANGE THIS ONE WORD LOCALLY IF YOU WANT
+  const suffix = "Kojja";
 
-  // 20 sec idle → decrease amount
+  // ⏳ 20 sec idle → decrease amount
   const startIdleTimer = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
@@ -29,61 +30,78 @@ function App() {
     startIdleTimer();
   };
 
-  const handleSubmitName = () => {
+  const handleSubmit = () => {
     if (nameInput.trim() !== "") {
-      setFinalName(`${nameInput} ${suffix}`);
-      setShowSurprise(true);
+      setFinalText(`${nameInput} ${suffix}`);
+      setShowResult(true);
     }
   };
 
   return (
     <div className="app-container">
-      <h1 className="title">Ruby</h1>
+      {/* ✅ Title */}
+      <h1 className="title">Gender Verification</h1>
 
-      <img
-        src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif"
-        alt="celebration"
-        className="celebration"
-      />
-
+      {/* Clap */}
       <div className="clap" onClick={handleClap}>
         👏
       </div>
 
+      {/* Amount */}
       <p className="amount">Cart Amount: ₹{amount}</p>
 
-      {!showSurprise && (
+      {!showResult && (
         <>
-          <button className="surprise-btn">
-            Surprise kosam ikkada click cheyandi
-          </button>
+          {/* Name input */}
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={nameInput}
+            onChange={(e) => setNameInput(e.target.value)}
+            style={{ padding: "8px", fontSize: "16px", marginTop: "15px" }}
+          />
 
-          <div style={{ marginTop: "15px" }}>
-            <input
-              type="text"
-              placeholder="Enter your name"
-              value={nameInput}
-              onChange={(e) => setNameInput(e.target.value)}
-              style={{ padding: "8px", fontSize: "16px" }}
-            />
-            <br />
-            <button
-              className="surprise-btn"
-              style={{ marginTop: "10px" }}
-              onClick={handleSubmitName}
-            >
-              Submit
-            </button>
+          {/* Gender select */}
+          <div style={{ marginTop: "10px" }}>
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                value="male"
+                onChange={(e) => setGender(e.target.value)}
+              />{" "}
+              Male
+            </label>
+
+            <label style={{ marginLeft: "15px" }}>
+              <input
+                type="radio"
+                name="gender"
+                value="female"
+                onChange={(e) => setGender(e.target.value)}
+              />{" "}
+              Female
+            </label>
           </div>
+
+          {/* Submit */}
+          <button
+            className="surprise-btn"
+            style={{ marginTop: "15px" }}
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
         </>
       )}
 
-      {showSurprise && (
+      {/* Result */}
+      {showResult && (
         <div className="surprise-box">
-          <h2>{finalName}</h2>
+          <h2>{finalText}</h2>
           <img
             src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
-            alt="party"
+            alt="celebration"
             className="surprise-gif"
           />
         </div>
