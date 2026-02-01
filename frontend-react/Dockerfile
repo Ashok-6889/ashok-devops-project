@@ -3,7 +3,8 @@ FROM node:18 AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-COPY . .
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 RUN npm run build
 
 # Runtime stage (FAST)
