@@ -1,91 +1,66 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
-import AdminLogin from "./AdminLogin";
+import React, { useState } from "react";
 
-function MainApp() {
-  const [amount, setAmount] = useState(0);
-  const [nameInput, setNameInput] = useState("");
-  const [gender, setGender] = useState("");
-  const [finalText, setFinalText] = useState("");
-  const [showResult, setShowResult] = useState(false);
-  const [clapCount, setClapCount] = useState(0);
+export default function AdminLogin() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  const suffix = " nv edhava le gani paduko ink ph em chustav ";
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAmount((prev) => (prev <= 0 ? 0 : prev - 1000));
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleClap = () => {
-    setAmount((prev) => prev + 1000);
-    setClapCount((prev) => prev + 1);
-  };
-
-  const handleSubmit = () => {
-    if (nameInput.trim() !== "") {
-      setFinalText(`${nameInput}${suffix}`);
-      setShowResult(true);
+  const handleLogin = () => {
+    if (username === "Ashok" && password === "Ashok@6889") {
+      setLoggedIn(true);
+    } else {
+      alert("Invalid Admin Credentials");
     }
   };
 
-  return (
-    <div className="app-container">
-      <div className="glass-card">
-        <h1 className="title">Gender Verification</h1>
-
-        <div className="clap" onClick={handleClap}>👏</div>
-        <p className="amount">Cart Amount: ₹{amount}</p>
-
-        {!showResult && (
-          <>
-            <input
-              className="name-input"
-              placeholder="Enter your name"
-              value={nameInput}
-              onChange={(e) => setNameInput(e.target.value)}
-            />
-
-            <div className="gender-box">
-              <label>
-                <input type="radio" name="gender" onChange={() => setGender("male")} /> Male
-              </label>
-              <label>
-                <input type="radio" name="gender" onChange={() => setGender("female")} /> Female
-              </label>
-            </div>
-
-            <button className="surprise-btn" onClick={handleSubmit}>
-              Submit
-            </button>
-          </>
-        )}
-
-        {showResult && (
-          <div className="surprise-box">
-            <h2>{finalText}</h2>
-            <img
-              className="surprise-gif"
-              src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
-              alt="celebration"
-            />
-          </div>
-        )}
+  if (!loggedIn) {
+    return (
+      <div className="admin-login">
+        <h2>Admin Login</h2>
+        <input
+          placeholder="Username"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <button onClick={handleLogin}>Login</button>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
-export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainApp />} />
-        <Route path="/admin" element={<AdminLogin />} />
-      </Routes>
-    </Router>
+    <div className="admin-panel">
+      <h2>Admin Dashboard</h2>
+
+      {!userData ? (
+        <p>No user data available</p>
+      ) : (
+        <table border="1" cellPadding="10">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Claps</th>
+              <th>Max Claps</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{userData.name}</td>
+              <td>{userData.gender}</td>
+              <td>{userData.claps}</td>
+              <td>{userData.maxClaps}</td>
+            </tr>
+          </tbody>
+        </table>
+      )}
+    </div>
   );
 }
