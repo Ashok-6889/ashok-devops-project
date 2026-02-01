@@ -1,22 +1,25 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function AdminDashboard() {
-  const data = JSON.parse(localStorage.getItem("userData")) || [];
+function AdminPage() {
+  const users = JSON.parse(localStorage.getItem("users") || "[]");
+  const navigate = useNavigate();
 
   return (
-    <div className="admin-table">
-      <h2>User Clap Data</h2>
+    <div className="admin-panel">
+      <h2>Admin Dashboard</h2>
+
       <table>
         <thead>
           <tr>
             <th>Name</th>
             <th>Gender</th>
             <th>Claps</th>
-            <th>Max Amount</th>
+            <th>Max Claps</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((u, i) => (
+          {users.map((u, i) => (
             <tr key={i}>
               <td>{u.name}</td>
               <td>{u.gender}</td>
@@ -26,8 +29,10 @@ function AdminDashboard() {
           ))}
         </tbody>
       </table>
+
+      <button onClick={() => navigate("/")}>Logout</button>
     </div>
   );
 }
 
-export default AdminDashboard;
+export default AdminPage;
