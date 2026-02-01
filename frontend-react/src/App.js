@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import AdminLogin from "./AdminLogin";
 
 function App() {
   const [amount, setAmount] = useState(0);
@@ -7,100 +8,102 @@ function App() {
   const [gender, setGender] = useState("");
   const [finalText, setFinalText] = useState("");
   const [showResult, setShowResult] = useState(false);
-
-  // 🔥 NEW: clap counter (admin view kosam)
   const [clapCount, setClapCount] = useState(0);
 
-  // ⚠️ suffix configurable
+  // 🔐 admin state
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+
   const suffix = " nv edhava le gani paduko ink ph em chustav ";
 
-  // ✅ EVERY 3 SECONDS DECREASE
+  // ⏱ every 3 sec decrease
   useEffect(() => {
     const interval = setInterval(() => {
-      setAmount(prev => (prev <= 0 ? 0 : prev - 1000));
+      setAmount((prev) => (prev <= 0 ? 0 : prev - 1000));
     }, 3000);
-
     return () => clearInterval(interval);
   }, []);
 
   const handleClap = () => {
-    setAmount(prev => prev + 1000);
-    setClapCount(prev => prev + 1); // 👈 track claps
+    setAmount((prev) => prev + 1000);
+    setClapCount((prev) => prev + 1);
   };
 
   const handleSubmit = () => {
     if (nameInput.trim() !== "") {
-      setFinalText(`${nameInput} ${suffix}`);
+      setFinalText(`${nameInput}${suffix}`);
       setShowResult(true);
     }
   };
 
   return (
     <div className="app-container">
-      <h1 className="title">Gender Verification</h1>
+      <div className="glass-card">
+        <h1 className="title">Gender Verification</h1>
 
-      <div className="clap" onClick={handleClap}>
-        👏
+        <div className="clap" onClick={handleClap}>👏</div>
+
+        <p className="amount">Cart Amount: ₹{amount}</p>
+
+        {!showResult && (
+          <>
+            <input
+              className="name-input"
+              placeholder="Enter your name"
+              value={nameInput}
+              onChange={(e) => setNameInput(e.target.value)}
+            />
+
+            <div className="gender-box">
+              <label>
+                <input type="radio" name="gender" onChange={() => setGender("male")} /> Male
+              </label>
+              <label>
+                <input type="radio" name="gender" onChange={() => setGender("female")} /> Female
+              </label>
+            </div>
+
+            <button className="surprise-btn" onClick={handleSubmit}>
+              Submit
+            </button>
+          </>
+        )}
+
+        {showResult && (
+          <div className="surprise-box">
+            <h2>{finalText}</h2>
+            <img
+              className="surprise-gif"
+              src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
+              alt="celebration"
+            />
+          </div>
+        )}
       </div>
 
-      <p className="amount">Cart Amount: ₹{amount}</p>
-
-      {!showResult && (
-        <>
-          <input
-            type="text"
-            placeholder="Enter your name"
-            value={nameInput}
-            onChange={(e) => setNameInput(e.target.value)}
-            className="name-input"
-          />
-
-          <div className="gender-box">
-            <label>
-              <input
-                type="radio"
-                name="gender"
-                value="male"
-                onChange={(e) => setGender(e.target.value)}
-              />{" "}
-              Male
-            </label>
-
-            <label>
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                onChange={(e) => setGender(e.target.value)}
-              />{" "}
-              Female
-            </label>
-          </div>
-
-          <button className="surprise-btn" onClick={handleSubmit}>
-            Submit
-          </button>
-        </>
+      {/* 🔐 ADMIN BUTTON */}
+      {!isAdmin && (
+        <button className="admin-toggle" onClick={() => setShowAdminLogin(!showAdminLogin)}>
+          Login as Admin
+        </button>
       )}
 
-      {showResult && (
-        <div className="surprise-box">
-          <h2>{finalText}</h2>
-          <img
-            src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
-            alt="celebration"
-            className="surprise-gif"
-          />
+      {showAdminLogin && !isAdmin && (
+        <AdminLogin onSuccess={() => {
+          setIsAdmin(true);
+          setShowAdminLogin(false);
+        }} />
+      )}
+
+      {/* 👀 ADMIN PANEL (ONLY FOR YOU) */}
+      {isAdmin && (
+        <div className="admin-panel">
+          <h4>Live User Data</h4>
+          <p><b>Name:</b> {nameInput || "-"}</p>
+          <p><b>Gender:</b> {gender || "-"}</p>
+          <p><b>Claps:</b> {clapCount}</p>
         </div>
       )}
-
-      {/* 🔴 BACKGROUND / ADMIN VIEW */}
-      <div className="admin-panel">
-        <h4>Live User Data</h4>
-        <p><b>Name:</b> {nameInput || "Not entered"}</p>
-        <p><b>Gender:</b> {gender || "Not selected"}</p>
-        <p><b>Claps:</b> {clapCount}</p>
-      </div>
     </div>
   );
 }
