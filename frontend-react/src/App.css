@@ -101,3 +101,40 @@ body {
 .error {
   color: red;
 }
+
+
+.admin-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.glass {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 30px;
+  color: white;
+}
+
+.admin-table {
+  width: 600px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background: rgba(255,255,255,0.3);
+}
+
