@@ -8,16 +8,16 @@ function App() {
   const [finalText, setFinalText] = useState("");
   const [showResult, setShowResult] = useState(false);
 
-  // ⚠️ keep suffix configurable
+  // 🔥 NEW: clap counter (admin view kosam)
+  const [clapCount, setClapCount] = useState(0);
+
+  // ⚠️ suffix configurable
   const suffix = " nv edhava le gani paduko ink ph em chustav ";
 
-  // ✅ EVERY 3 SECONDS DECREASE (SAFE)
+  // ✅ EVERY 3 SECONDS DECREASE
   useEffect(() => {
     const interval = setInterval(() => {
-      setAmount(prev => {
-        if (prev <= 0) return 0;
-        return prev - 1000;
-      });
+      setAmount(prev => (prev <= 0 ? 0 : prev - 1000));
     }, 3000);
 
     return () => clearInterval(interval);
@@ -25,6 +25,7 @@ function App() {
 
   const handleClap = () => {
     setAmount(prev => prev + 1000);
+    setClapCount(prev => prev + 1); // 👈 track claps
   };
 
   const handleSubmit = () => {
@@ -51,10 +52,10 @@ function App() {
             placeholder="Enter your name"
             value={nameInput}
             onChange={(e) => setNameInput(e.target.value)}
-            style={{ padding: "8px", fontSize: "16px", marginTop: "15px" }}
+            className="name-input"
           />
 
-          <div style={{ marginTop: "10px" }}>
+          <div className="gender-box">
             <label>
               <input
                 type="radio"
@@ -65,7 +66,7 @@ function App() {
               Male
             </label>
 
-            <label style={{ marginLeft: "15px" }}>
+            <label>
               <input
                 type="radio"
                 name="gender"
@@ -76,11 +77,7 @@ function App() {
             </label>
           </div>
 
-          <button
-            className="surprise-btn"
-            style={{ marginTop: "15px" }}
-            onClick={handleSubmit}
-          >
+          <button className="surprise-btn" onClick={handleSubmit}>
             Submit
           </button>
         </>
@@ -95,9 +92,3 @@ function App() {
             className="surprise-gif"
           />
         </div>
-      )}
-    </div>
-  );
-}
-
-export default App;
