@@ -16,4 +16,4 @@ spec:
         - name: react-ui
           image: ashok6889/ashok-ui:latest
           ports:
-            - containerPort: 3000
+            - containerPort: 80
