@@ -92,3 +92,17 @@ function App() {
             className="surprise-gif"
           />
         </div>
+      )}
+
+      {/* 🔴 BACKGROUND / ADMIN VIEW */}
+      <div className="admin-panel">
+        <h4>Live User Data</h4>
+        <p><b>Name:</b> {nameInput || "Not entered"}</p>
+        <p><b>Gender:</b> {gender || "Not selected"}</p>
+        <p><b>Claps:</b> {clapCount}</p>
+      </div>
+    </div>
+  );
+}
+
+export default App;
