@@ -17,7 +17,7 @@ function App() {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       setAmount((prev) => (prev > 1000 ? prev - 1000 : prev));
-    }, 20000);
+    }, 3000);
   };
 
   useEffect(() => {
