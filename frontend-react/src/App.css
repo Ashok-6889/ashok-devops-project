@@ -1,20 +1,62 @@
-.container {
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.app-container {
   text-align: center;
-  margin-top: 60px;
-  font-family: Arial, sans-serif;
+  margin-top: 40px;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.celebration {
+  width: 120px;
+  margin: 15px auto;
 }
 
 .clap {
   font-size: 80px;
   cursor: pointer;
-  animation: clap 0.6s infinite alternate;
+  animation: clapAnim 1s infinite;
 }
 
-@keyframes clap {
-  from {
-    transform: rotate(-12deg);
+@keyframes clapAnim {
+  0% {
+    transform: scale(1);
   }
-  to {
-    transform: rotate(12deg);
+  50% {
+    transform: scale(1.2);
   }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.amount {
+  font-size: 22px;
+  margin-top: 10px;
+}
+
+.surprise-btn {
+  margin-top: 20px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ff9800;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.surprise-box {
+  margin-top: 20px;
+}
+
+.surprise-gif {
+  width: 200px;
+  margin-top: 10px;
 }
