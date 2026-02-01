@@ -1,0 +1,15 @@
+.container {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.clap {
+  font-size: 80px;
+  cursor: pointer;
+  animation: clap 0.6s infinite alternate;
+}
+
+@keyframes clap {
+  from { transform: rotate(-12deg); }
+  to { transform: rotate(12deg); }
+}
