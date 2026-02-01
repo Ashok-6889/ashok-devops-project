@@ -8,13 +8,15 @@ function App() {
   const [gender, setGender] = useState("");
   const [finalText, setFinalText] = useState("");
   const [showResult, setShowResult] = useState(false);
-  const [clapCount, setClapCount] = useState(0);
 
-  // 🔐 admin state
+  const [clapCount, setClapCount] = useState(0);
+  const [maxClaps, setMaxClaps] = useState(0);
+
+  // 🔐 Admin states
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
 
-  const suffix = " nv edhava le gani paduko ink ph em chustav ";
+  const suffix = " Welcome to my project 🚀 ";
 
   // ⏱ every 3 sec decrease
   useEffect(() => {
@@ -24,20 +26,40 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // 👏 clap logic
   const handleClap = () => {
     setAmount((prev) => prev + 1000);
-    setClapCount((prev) => prev + 1);
+    setClapCount((prev) => {
+      const updated = prev + 1;
+      setMaxClaps((m) => (updated > m ? updated : m));
+      return updated;
+    });
   };
 
+  // ✅ Submit + save user data
   const handleSubmit = () => {
-    if (nameInput.trim() !== "") {
-      setFinalText(`${nameInput}${suffix}`);
-      setShowResult(true);
-    }
+    if (!nameInput.trim()) return;
+
+    setFinalText(`${nameInput}${suffix}`);
+    setShowResult(true);
+
+    const existing = JSON.parse(localStorage.getItem("userData")) || [];
+
+    const newEntry = {
+      name: nameInput,
+      gender: gender || "N/A",
+      claps: clapCount,
+      maxClaps: maxClaps,
+    };
+
+    localStorage.setItem("userData", JSON.stringify([...existing, newEntry]));
   };
+
+  const adminData = JSON.parse(localStorage.getItem("userData")) || [];
 
   return (
     <div className="app-container">
+      {/* ================= USER UI ================= */}
       <div className="glass-card">
         <h1 className="title">Gender Verification</h1>
 
@@ -56,10 +78,21 @@ function App() {
 
             <div className="gender-box">
               <label>
-                <input type="radio" name="gender" onChange={() => setGender("male")} /> Male
+                <input
+                  type="radio"
+                  name="gender"
+                  onChange={() => setGender("male")}
+                />{" "}
+                Male
               </label>
+
               <label>
-                <input type="radio" name="gender" onChange={() => setGender("female")} /> Female
+                <input
+                  type="radio"
+                  name="gender"
+                  onChange={() => setGender("female")}
+                />{" "}
+                Female
               </label>
             </div>
 
@@ -81,27 +114,50 @@ function App() {
         )}
       </div>
 
-      {/* 🔐 ADMIN BUTTON */}
+      {/* ================= ADMIN LOGIN BUTTON ================= */}
       {!isAdmin && (
-        <button className="admin-toggle" onClick={() => setShowAdminLogin(!showAdminLogin)}>
+        <button
+          className="admin-toggle"
+          onClick={() => setShowAdminLogin(!showAdminLogin)}
+        >
           Login as Admin
         </button>
       )}
 
       {showAdminLogin && !isAdmin && (
-        <AdminLogin onSuccess={() => {
-          setIsAdmin(true);
-          setShowAdminLogin(false);
-        }} />
+        <AdminLogin
+          onSuccess={() => {
+            setIsAdmin(true);
+            setShowAdminLogin(false);
+          }}
+        />
       )}
 
-      {/* 👀 ADMIN PANEL (ONLY FOR YOU) */}
+      {/* ================= ADMIN TABLE (ONLY AFTER LOGIN) ================= */}
       {isAdmin && (
-        <div className="admin-panel">
-          <h4>Live User Data</h4>
-          <p><b>Name:</b> {nameInput || "-"}</p>
-          <p><b>Gender:</b> {gender || "-"}</p>
-          <p><b>Claps:</b> {clapCount}</p>
+        <div className="admin-table-panel">
+          <h3>User Clap Data</h3>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Claps</th>
+                <th>Max Claps</th>
+              </tr>
+            </thead>
+            <tbody>
+              {adminData.map((u, i) => (
+                <tr key={i}>
+                  <td>{u.name}</td>
+                  <td>{u.gender}</td>
+                  <td>{u.claps}</td>
+                  <td>{u.maxClaps}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
