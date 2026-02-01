@@ -9,7 +9,7 @@ function App() {
   const [showResult, setShowResult] = useState(false);
 
   // ⚠️ keep suffix configurable
-  const suffix = "Kojja";
+  const suffix = " nv edhava le gani paduko ink ph em chustav ";
 
   // ✅ EVERY 3 SECONDS DECREASE (SAFE)
   useEffect(() => {
