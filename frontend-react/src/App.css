@@ -1,62 +1,65 @@
+/* Full page gradient background */
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-height: 100vh;
 }
 
+/* Center container */
 .app-container {
+  background: #ffffff;
+  width: 90%;
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 30px;
+  border-radius: 14px;
   text-align: center;
-  margin-top: 40px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
 }
 
+/* Title */
 .title {
-  font-size: 48px;
-  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-.celebration {
-  width: 120px;
-  margin: 15px auto;
-}
-
+/* Clap icon */
 .clap {
-  font-size: 80px;
+  font-size: 55px;
   cursor: pointer;
-  animation: clapAnim 1s infinite;
+  margin: 15px 0;
 }
 
-@keyframes clapAnim {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
+/* Amount text */
 .amount {
-  font-size: 22px;
-  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
+/* Button */
 .surprise-btn {
-  margin-top: 20px;
-  padding: 12px 20px;
+  background: #ff9800;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #ff9800;
-  border: none;
-  border-radius: 5px;
-  color: white;
 }
 
+.surprise-btn:hover {
+  background: #e68900;
+}
+
+/* Result box */
 .surprise-box {
   margin-top: 20px;
 }
 
 .surprise-gif {
-  width: 200px;
+  width: 180px;
   margin-top: 10px;
+  border-radius: 10px;
 }
