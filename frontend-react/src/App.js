@@ -13,12 +13,14 @@ function App() {
   const suffix = "Kojja";
 
   // ⏳ 20 sec idle → decrease amount
-  const startIdleTimer = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setAmount((prev) => (prev > 1000 ? prev - 1000 : prev));
-    }, 3000);
-  };
+  useEffect(() => {
+  timerRef.current = setInterval(() => {
+    setAmount((prev) => (prev > 1000 ? prev - 1000 : prev));
+  }, 3000); // ⏱️ every 3 seconds
+
+  return () => clearInterval(timerRef.current);
+}, []);
+
 
   useEffect(() => {
     startIdleTimer();
