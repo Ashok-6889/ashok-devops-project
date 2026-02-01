@@ -16,7 +16,7 @@ pipeline {
     stage('Docker Build') {
       steps {
         dir('frontend-react') {
-          sh 'docker build -t $IMAGE_NAME .'
+          sh "docker build -t ${IMAGE_NAME} ."
         }
       }
     }
@@ -24,7 +24,7 @@ pipeline {
     stage('Docker Login') {
       steps {
         withCredentials([usernamePassword(
-          credentialsId: 'docker-cre',   // ✅ FIXED ID
+          credentialsId: 'docker-cre',
           usernameVariable: 'DOCKER_USER',
           passwordVariable: 'DOCKER_PASS'
         )]) {
@@ -35,7 +35,7 @@ pipeline {
 
     stage('Docker Push') {
       steps {
-        sh 'docker push $IMAGE_NAME'
+        sh "docker push ${IMAGE_NAME}"
       }
     }
 
@@ -45,4 +45,12 @@ pipeline {
       }
     }
 
-    stage('Verify Deployment')
+    stage('Verify Deployment') {
+      steps {
+        sh 'kubectl get pods'
+        sh 'kubectl get svc'
+      }
+    }
+
+  }
+}
