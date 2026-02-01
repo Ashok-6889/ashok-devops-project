@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [amount, setAmount] = useState(4000);
+  const [amount, setAmount] = useState(0);
   const [nameInput, setNameInput] = useState("");
   const [gender, setGender] = useState("");
   const [finalText, setFinalText] = useState("");
