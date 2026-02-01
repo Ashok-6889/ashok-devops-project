@@ -1,6 +1,7 @@
 .container {
   text-align: center;
   margin-top: 60px;
+  font-family: Arial, sans-serif;
 }
 
 .clap {
@@ -10,6 +11,10 @@
 }
 
 @keyframes clap {
-  from { transform: rotate(-12deg); }
-  to { transform: rotate(12deg); }
+  from {
+    transform: rotate(-12deg);
+  }
+  to {
+    transform: rotate(12deg);
+  }
 }
