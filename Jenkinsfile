@@ -13,7 +13,6 @@ pipeline {
       }
     }
 
-    /* 🔧 NEW: Install dependencies */
     stage('NPM Install') {
       steps {
         dir('frontend-react') {
@@ -22,7 +21,6 @@ pipeline {
       }
     }
 
-    /* 🔧 NEW: Build React App */
     stage('NPM Build') {
       steps {
         dir('frontend-react') {
@@ -46,4 +44,30 @@ pipeline {
           usernameVariable: 'DOCKER_USER',
           passwordVariable: 'DOCKER_PASS'
         )]) {
-          sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --pa
+          sh '''
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+          '''
+        }
+      }
+    }
+
+    stage('Docker Push') {
+      steps {
+        sh "docker push ${IMAGE_NAME}"
+      }
+    }
+
+    stage('Deploy to EKS') {
+      steps {
+        sh 'kubectl apply -f kubernetes/'
+      }
+    }
+
+    stage('Verify Deployment') {
+      steps {
+        sh 'kubectl get pods'
+        sh 'kubectl get svc'
+      }
+    }
+  }
+}
