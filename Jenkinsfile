@@ -13,22 +13,6 @@ pipeline {
       }
     }
 
-    stage('NPM Install') {
-      steps {
-        dir('frontend-react') {
-          sh 'npm install'
-        }
-      }
-    }
-
-    stage('NPM Build') {
-      steps {
-        dir('frontend-react') {
-          sh 'npm run build'
-        }
-      }
-    }
-
     stage('Docker Build') {
       steps {
         dir('frontend-react') {
