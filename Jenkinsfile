@@ -24,7 +24,7 @@ pipeline {
     stage('Docker Login') {
       steps {
         withCredentials([usernamePassword(
-          credentialsId: 'dockerhub-creds',
+          credentialsId: 'docker-cre',   // ✅ FIXED ID
           usernameVariable: 'DOCKER_USER',
           passwordVariable: 'DOCKER_PASS'
         )]) {
@@ -45,11 +45,4 @@ pipeline {
       }
     }
 
-    stage('Verify Deployment') {
-      steps {
-        sh 'kubectl get pods'
-        sh 'kubectl get svc'
-      }
-    }
-  }
-}
+    stage('Verify Deployment')
