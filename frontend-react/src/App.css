@@ -1,65 +1,32 @@
-/* Full page gradient background */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  min-height: 100vh;
-}
-
-/* Center container */
-.app-container {
-  background: #ffffff;
-  width: 90%;
-  max-width: 420px;
-  margin: 60px auto;
-  padding: 30px;
-  border-radius: 14px;
-  text-align: center;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-}
-
-/* Title */
-.title {
-  margin-bottom: 20px;
-  color: #333;
-}
-
-/* Clap icon */
-.clap {
-  font-size: 55px;
-  cursor: pointer;
-  margin: 15px 0;
-}
-
-/* Amount text */
-.amount {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-/* Button */
-.surprise-btn {
-  background: #ff9800;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.surprise-btn:hover {
-  background: #e68900;
-}
-
-/* Result box */
-.surprise-box {
-  margin-top: 20px;
-}
-
-.surprise-gif {
-  width: 180px;
-  margin-top: 10px;
+/* 🔴 ADMIN / BACKGROUND PANEL */
+.admin-panel {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 220px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 12px;
   border-radius: 10px;
+  font-size: 14px;
+  z-index: 9999;
+}
+
+.admin-panel h4 {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+  color: #ffd700;
+}
+
+/* small UI polish */
+.name-input {
+  padding: 8px;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.gender-box {
+  margin-top: 10px;
+  display: flex;
+  gap: 15px;
 }
