@@ -1,28 +1,59 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [cart, setCart] = useState(0);
+  const [amount, setAmount] = useState(17000);
+  const [showSurprise, setShowSurprise] = useState(false);
 
-  const clap = () => {
-    const amount = 1000;
+  // ⏳ If no clap for 20 sec → amount decrease
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAmount((prev) => (prev > 1000 ? prev - 1000 : prev));
+    }, 20000);
 
-    if (cart + amount <= 100000) {
-      setCart(cart + amount);
-    } else {
-      alert("Cart limit reached (1,00,000)");
-    }
+    return () => clearTimeout(timer);
+  }, [amount]);
+
+  const handleClap = () => {
+    setAmount((prev) => (prev < 1000000 ? prev + 1000 : prev));
   };
 
   return (
-    <div className="container">
-      <h1>Ashok</h1>
+    <div className="app-container">
+      {/* Name */}
+      <h1 className="title">Ruby</h1>
 
-      <div className="clap" onClick={clap}>
+      {/* Celebration GIF under name */}
+      <img
+        src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif"
+        alt="celebration"
+        className="celebration"
+      />
+
+      {/* Clap */}
+      <div className="clap" onClick={handleClap}>
         👏
       </div>
 
-      <p>Cart Amount: ₹{cart}</p>
+      {/* Cart amount */}
+      <p className="amount">Cart Amount: ₹{amount}</p>
+
+      {/* Surprise Button */}
+      <button className="surprise-btn" onClick={() => setShowSurprise(true)}>
+        Surprise kosam ikkada click cheyandi
+      </button>
+
+      {/* Surprise content */}
+      {showSurprise && (
+        <div className="surprise-box">
+          <h2>Your Kojja</h2>
+          <img
+            src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
+            alt="party"
+            className="surprise-gif"
+          />
+        </div>
+      )}
     </div>
   );
 }
