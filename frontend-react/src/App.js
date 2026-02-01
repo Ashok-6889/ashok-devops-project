@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -7,29 +7,24 @@ function App() {
   const [gender, setGender] = useState("");
   const [finalText, setFinalText] = useState("");
   const [showResult, setShowResult] = useState(false);
-  const timerRef = useRef(null);
 
-  // 🔁 CHANGE THIS ONE WORD LOCALLY IF YOU WANT
+  // ⚠️ keep suffix configurable
   const suffix = "Kojja";
 
-  // ⏳ 20 sec idle → decrease amount
+  // ✅ EVERY 3 SECONDS DECREASE (SAFE)
   useEffect(() => {
-  timerRef.current = setInterval(() => {
-    setAmount((prev) => (prev > 1000 ? prev - 1000 : prev));
-  }, 3000); // ⏱️ every 3 seconds
+    const interval = setInterval(() => {
+      setAmount(prev => {
+        if (prev <= 0) return 0;
+        return prev - 1000;
+      });
+    }, 3000);
 
-  return () => clearInterval(timerRef.current);
-}, []);
-
-
-  useEffect(() => {
-    startIdleTimer();
-    return () => clearTimeout(timerRef.current);
+    return () => clearInterval(interval);
   }, []);
 
   const handleClap = () => {
-    setAmount((prev) => (prev < 100000 ? prev + 1000 : prev));
-    startIdleTimer();
+    setAmount(prev => prev + 1000);
   };
 
   const handleSubmit = () => {
@@ -41,20 +36,16 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* ✅ Title */}
       <h1 className="title">Gender Verification</h1>
 
-      {/* Clap */}
       <div className="clap" onClick={handleClap}>
         👏
       </div>
 
-      {/* Amount */}
       <p className="amount">Cart Amount: ₹{amount}</p>
 
       {!showResult && (
         <>
-          {/* Name input */}
           <input
             type="text"
             placeholder="Enter your name"
@@ -63,7 +54,6 @@ function App() {
             style={{ padding: "8px", fontSize: "16px", marginTop: "15px" }}
           />
 
-          {/* Gender select */}
           <div style={{ marginTop: "10px" }}>
             <label>
               <input
@@ -86,7 +76,6 @@ function App() {
             </label>
           </div>
 
-          {/* Submit */}
           <button
             className="surprise-btn"
             style={{ marginTop: "15px" }}
@@ -97,7 +86,6 @@ function App() {
         </>
       )}
 
-      {/* Result */}
       {showResult && (
         <div className="surprise-box">
           <h2>{finalText}</h2>
