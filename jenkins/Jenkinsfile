@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    IMAGE_NAME = "dockerhub_username/ashok-ui:latest"
+    IMAGE_NAME = "ashok6889/ashok-ui:latest"
   }
 
   stages {
